@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Côte d'Ivoire Map</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+     <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="civ.topo.json"></script>
+  <style>
+    path {
+      fill: #f4bf00;
+      stroke: #0f6304;
+      stroke-width: 1px;
+      height:  45px;
+    }
+    path:hover {
+      fill: #0f6304;
+      cursor: pointer;
+    }
+    #civ-svg{
+        width: 1000px;
+        height: 1000px;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="civ-svg" ></svg>
+  <script>
+d3.xml("civ.svg").mimeType("image/svg+xml").get(function(error, xml) {
+        if (error) throw error;
+        document.getElementById("civ-svg").appendChild(xml.documentElement);
+      });
+      var civTopology = topojson.topology({civ: civGeoJson});
+      var path = d3.geoPath().projection(d3.geoMercator().fitSize([width, height], civTopology));
+      console.log(civTopology)
+      d3.select("#civ-svg")
+  .selectAll(".civ-regions")
+  .data(topojson.feature(civTopology, civTopology.objects.civ).features)
+  .enter()
+  .append("path")
+  .attr("class", "civ-regions")
+  .attr("d", path);
+
+    
+    
+
+  </script>
+</body>

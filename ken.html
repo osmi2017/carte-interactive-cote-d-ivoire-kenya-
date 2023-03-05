@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Interactive Kenya Map</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="kenya.topo.json"></script>
+
+  <style>
+    path {
+      fill: #ccc;
+      stroke: #fff;
+      stroke-width: 1px;
+    }
+    path:hover {
+      fill: #999;
+      cursor: pointer;
+    }
+    #kenya-svg{
+        width: 800px;
+        height: 800px;
+    }
+  </style>
+</head>
+
+<body>
+    <svg  id="kenya-svg"></svg>
+    <script>
+      d3.xml("kenya.svg").mimeType("image/svg+xml").get(function(error, xml) {
+        if (error) throw error;
+        document.getElementById("kenya-svg").appendChild(xml.documentElement);
+      });
+      var kenyaTopology = topojson.topology({kenya: kenyaGeoJson});
+      var path = d3.geoPath().projection(d3.geoMercator().fitSize([width, height], kenyaTopology));
+      d3.select("#kenya-svg")
+  .selectAll(".kenya-regions")
+  .data(topojson.feature(kenyaTopology, kenyaTopology.objects.KEN_adm1).features)
+  .enter()
+  .append("path")
+  .attr("class", "kenya-regions")
+  .attr("d", path);
+
+    </script>
+    
+</body>
+</html>
