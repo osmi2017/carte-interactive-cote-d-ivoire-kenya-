@@ -74,9 +74,9 @@
 
       
     });
-
+    const title="Kajiado"
     function checkHoverState() {
-      title="Machakos"
+     alert(title)
   var elements = document.querySelectorAll("[title='" + title + "']");
   elements[0].classList.add("highlight");
  var elid= elements[0].getAttribute("id")
@@ -91,7 +91,7 @@
 
   // ...
 }
-const myInterval= setInterval(checkHoverState, 2000);
+const myInterval= setInterval(checkHoverState(), 2000);
 
 function myStopFunction() {
   clearInterval(myInterval);

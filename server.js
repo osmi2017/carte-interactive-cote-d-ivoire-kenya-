@@ -23,3 +23,19 @@ app.get("/", (req, res) => {
   app.get("/civ", (req, res) => {
     res.sendFile(__dirname + "/civ.html");
   });
+
+  app.get("/heat", (req, res) => {
+    res.sendFile(__dirname + "/ken_heat.html");
+  });
+
+  app.get("/hi", (req, res) => {
+    const lon = parseFloat(req.query.lon);
+    const lat = parseFloat(req.query.lat);
+  
+    if (!isNaN(lon) && !isNaN(lat)) {
+      res.sendFile(__dirname + "/ken_high.html");
+    } else {
+      res.send("Invalid coordinates");
+    }
+  });
+  
